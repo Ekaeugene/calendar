@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" ng-app="calendarApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
+
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="app.animations.css" />
+
+    <link rel="stylesheet" href="css/calendar.css" />
+    <link rel="stylesheet" href="css/header.css" />
+
+  
+
+
+  </head>
+  <body>
+    <div class="wrap-calendar" ng-controller="CalendarInitCtrl">
+        <div class="calendar__head">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3 col-xs-4 col-sm-6 none-indents">
+                <div class="col-md-5 none-indents">
+                  <button class="calendar__button">Добавить</button>
+                 </div> 
+                <div class="col-md-5 none-indents">
+                  <button class="calendar__button">Обновить</button>
+                 </div>         
+              </div>
+              <div ng-controller="EventCtrl" class="col-md-3 col-xs-8 col-sm-6 pull-right">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                <input class="calendar__search" ng-model="search" type="text" placeholder="События, дата, участники" >
+              </div>
+
+          </div>
+          </div>  
+        </div>
+        <div class="container" ng-controller="EventCtrl">
+            <div class="row">
+              <div class="calendar-nav">
+                  <div class="col-md-6">
+                      <div ng-init="changeEventInMonth(curMonth,year)" class="nav">      
+                      <p 
+                      ng-mousedown="changeEventInMonth(curMonth-1,year)" 
+                      ng-click="newWeek(curMonth-1)" class="glyphicon glyphicon-play_left glyphicon-play"></p>
+                      <span class="curweek-year"> {{month}} {{year}}</span>
+                      <p ng-mousedown="changeEventInMonth(curMonth+1,year)" ng-click="newWeek( curMonth + 1 )" class="glyphicon glyphicon-play"></p>
+                      </div>
+                  </div>    
+              </div>
+            </div>
+            <div class="calendar" data-toggle="calendar">
+              <div class="row" >
+                  <div id="wrapEvent" class="col-xs-12 calendar-day calendar-day-{{day}}"
+                    ng-click="change(events[day].eventName, day)"
+                    ng-class="{'calendar-no-current-month':$index < dayCurWeek}"
+                    ng-repeat="day in monthCalendar track by $index"
+      
+                    >
+
+                    <next-level id='pop' popover-html='{{events[day].eventName}}'>
+                      <p><time >{{getDayWeek[$index]}} {{day}}</time></p>
+                      <p class="event event_{{day}}">{{events[day].eventName}}</p>
+                      <div month="{{month}}" id="tool_{{day}}" class="tool-form"></div>
+                    </next-level>
+
+                  </div> 
+              </div>
+            </div>
+        </div>
+<div class="container">
+    <div class="col-md-6" ng-controller="EventCtrl"> 
+      <form ng-submit="processForm()">
+       <div class="form-group">
+        <input ng-model="formData.eventName" type="text" placeholder="событие" class="form-control" id="email">
+      </div>
+      <div class="form-group">
+        <input type="text" ng-model="formData.times" placeholder="день,месяц,год"class="form-control" id="pwd">
+      </div>
+      <div class="form-group">
+        <input ng-model="formData.people" type="text" placeholder="Имена участников"class="form-control" id="pwd">
+      </div>
+      <div class="form-group">
+        <textarea ng-model="formData.descrption" placeholder="Описание"></textarea>
+      </div>
+      <button type="submit" ng-click="addEvent( 20, {{year}}, {{numMonth}} );" class="btn btn-default">
+        Добавить
+      </button>
+    </form>
+    </div>
+  </div>
+     
+
+
+    </div>
+  
+
+
+  </body>
+
+  </div>
+</html>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="js/controller.js"></script>
+     <script type="text/javascript" src="js/popover.js"></script>
+
+
